@@ -97,3 +97,17 @@ SELECT
 FROM am.listoforders
 GROUP BY month, year
 ORDER BY days_to_ship DESC
+
+#10 How were regions performing compared to each other in 2014?
+WITH sales_cte AS (SELECT SUM(sales) sales_by_region,
+region
+FROM am.orderbreakdwon o
+JOIN am.listoforders l on o.order_id = l.Order_ID
+WHERE order_date BETWEEN '2014-01-01' AND '2014-12-31'                   
+GROUP BY region
+)
+SELECT
+AVG(sales_by_region) avage_total_sales,
+region
+FROM sales_cte
+GROUP BY ROLLUP(region)
