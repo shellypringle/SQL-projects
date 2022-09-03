@@ -1,5 +1,4 @@
-## In this SQL project, I'm querying a database with multiple tables
-to inform data-driven decisions related to "Amazing Mart"
+
 
 #1 How do sales of products compare to target sales by month and year?
 SELECT
