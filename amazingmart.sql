@@ -1,15 +1,18 @@
 
 
-#1 How do sales of products compare to target sales by month and year?
+#1 Which order was the most profitable in Italy, January 2012? Who made the purchase?
 SELECT
-  order_date,
-  sum(sales) sales,
-  sum(s.target) target
+l.order_id,
+customer_name,
+country,
+sum(profit) profit
 FROM am.listoforders l
   JOIN am.orderbreakdwon o ON l.order_id = o.order_id
-  LEFT JOIN am.salestargets2 s ON l.order_date = s.Month_of_Order_Date
-GROUP BY ROLLUP (order_date)
-ORDER BY order_date
+WHERE order_date BETWEEN '2012-01-01' AND '2012-01-28'
+AND country = 'Italy'
+GROUP BY customer_name, country, l.order_id
+ORDER BY profit DESC
+
 
 #2 Of the products sold, which category is the most profitable? Which subcategory within this category is the most profitable?
 SELECT
@@ -42,15 +45,16 @@ FROM `coursera-project-358501.am.orderbreakdwon`
 GROUP BY ROLLUP (category, sub_category)
 ORDER BY category, profit DESC
 
-#5 Which customer has been the most profitable, and in which country do they live?
+#5 How do sales of products compare to target sales?
 SELECT
-customer_name,
-country,
-sum(profit) profit
+  order_date,
+  sum(sales) sales,
+  sum(s.target) target
 FROM am.listoforders l
   JOIN am.orderbreakdwon o ON l.order_id = o.order_id
-GROUP BY customer_name, country
-ORDER BY profit DESC
+  LEFT JOIN am.salestargets2 s ON l.order_date = s.Month_of_Order_Date
+GROUP BY ROLLUP (order_date)
+ORDER BY order_date
 
 #6 Which ship mode was the most profitable in 2011?
 SELECT 
