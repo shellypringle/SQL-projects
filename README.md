@@ -10,4 +10,4 @@ to inform data-driven decisions related to "Amazing Mart".
 ## Second Period project
 
 ## In this project, student/teacher data was analyzed in order to identify trends and ensure remediation for low-performing students.
-[see sql here] (https://github.com/shellypringle/student_analysis/tree/main)
+[see sql here] (https://github.com/shellypringle/SQL-projects/blob/main/second_period.sql)
