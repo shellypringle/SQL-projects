@@ -116,3 +116,10 @@ FROM
     second_period s
     JOIN teachers t ON s.id = t.student_id
 ORDER BY activity
+
+#8 Are there any students involved in sports who could serve as peer tutors?
+SELECT
+  *
+FROM second_period s1
+WHERE intro_math = (SELECT MAX(Intro_math) FROM second_period s2  
+                    WHERE s1.activity = s2.activity AND activity = 'sport')
