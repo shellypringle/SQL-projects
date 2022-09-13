@@ -33,6 +33,17 @@ VALUES
 (019, 'Adam', 'Peters', 10, 'theater', 2, 50, 90, 65),
 (020, 'Abigail', 'Foster', 11, 'band', 5, 100, 100, 100)
 
+edited the table due to some name preferences:
+UPDATE second_period 
+SET first_name = 'Mary'
+WHERE first_name = 'Mariela' and last_name = 'Fisher';
+UPDATE second_period
+SET first_name = 'Bobby'
+WHERE first_name = 'Robert' and last_name = 'Collins';
+UPDATE second_period
+SET first_name = 'Beth'
+WHERE first_name = 'Townes'
+
 #1 Which students self-report an emotional state of 2 or lower?
 SELECT first_name, last_name, feeling_scale FROM second_period
 WHERE feeling_scale <3
@@ -42,13 +53,10 @@ SELECT ROUND((COUNT (*)/20.0)*100) as sport_percentage
 FROM second_period
 WHERE activity = 'sport'
 
-#3 What was the average for exam 1? Which students scored below average?
-SELECT ROUND(AVG(exam_1),2)
-FROM second_period;
-
+#3 Which students scored below average on exam 1?
 SELECT first_name, last_name, exam_1 
-FROM second_period WHERE exam_1 < ((
-SELECT ROUND(AVG(exam_1),2)
+FROM second_period WHERE exam_1 < 
+((SELECT ROUND(AVG(exam_1),2)
 FROM second_period))
 
 #4 How did students do on the intro assignemnt? How can we group those who are in need of remediation?
