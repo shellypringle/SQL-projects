@@ -2,24 +2,24 @@
 use northwind_spp;
 
 Which customers have made at least one purchase of 15K+?
-``` 
+
 SELECT c.customerID ,c.companyname ,o.orderID ,sum(quantity * unitprice) as totalorderamount
 FROM customers c join orders o on o.customerID = c.customerID 
 join orderdetails od on o.orderID = od.orderID 
 WHERE year(orderdate) =2016
 GROUP BY c.customerID, c.companyName ,o.orderID
 HAVING sum(quantity*unitprice) >=15000;
-```
+
 
 Generate a random set order IDs of 2% of orders:
-```
+
 SELECT top 2 percent orderID 
 FROM orders 
 ORDER BY newID();
-'''
+
 
 There was an order accidentally entered twice. Find it.
-```with potentialduplicates as 
+with potentialduplicates as 
 (SELECT orderID 
 FROM orderdetails 
 WHERE quantity >= 60 
@@ -29,10 +29,10 @@ SELECT orderID ,productID ,unitprice ,quantity ,discount
 FROM orderdetails 
 WHERE orderID in (Select OrderID from potentialduplicates) 
 ORDER BY orderID ,quantity;
-```
+
 
 Some employees are responsible for orders that end up arriving late. Find them and the total amount of orders they are responsible for.
-```
+
 with lateorders as 
 (SELECT employeeID ,COUNT(*) as totalorders
 FROM orders 
@@ -44,10 +44,10 @@ FROM orders o GROUP BY employeeID)
 SELECT e.employeeID ,lastName , a.totalorders as allorders ,l.totalOrders as lateorders 
 FROM employees e join allorders a on a.EmployeeID = e.EmployeeID join lateorders l on l.employeeID = e.employeeID;  
 ORDER BY e.employeeID;
-```
+
 
 Put customers into categories based on order amounts:
-```
+
 with orders2016 as 
 (SELECT c.customerID ,c.companyname ,totalorderamount = SUM(Quantity * UnitPrice) 
 FROM customers c
@@ -63,17 +63,16 @@ when totalorderamount >= 10000 then 'Very High'
 end 
 FROM orders2016 
 ORDER BY totalorderamount DESC;
-```
+
 
 Pull together two tables (suppliers and customers) based on country:
-```
+
 SELECT country 
 FROM customers 
 UNION 
 SELECT country 
 FROM suppliers 
 ORDER BY country;
-```
 
 Find the first order for each country:
 ```
