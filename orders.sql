@@ -2,7 +2,6 @@
 use northwind_spp;
 
 Which customers have made at least one purchase of 15K+?
-
 SELECT c.customerID ,c.companyname ,o.orderID ,sum(quantity * unitprice) as totalorderamount
 FROM customers c join orders o on o.customerID = c.customerID 
 join orderdetails od on o.orderID = od.orderID 
@@ -12,7 +11,6 @@ HAVING sum(quantity*unitprice) >=15000;
 
 
 Generate a random set order IDs of 2% of orders:
-
 SELECT top 2 percent orderID 
 FROM orders 
 ORDER BY newID();
@@ -32,7 +30,6 @@ ORDER BY orderID ,quantity;
 
 
 Some employees are responsible for orders that end up arriving late. Find them and the total amount of orders they are responsible for.
-
 with lateorders as 
 (SELECT employeeID ,COUNT(*) as totalorders
 FROM orders 
@@ -47,7 +44,6 @@ ORDER BY e.employeeID;
 
 
 Put customers into categories based on order amounts:
-
 with orders2016 as 
 (SELECT c.customerID ,c.companyname ,totalorderamount = SUM(Quantity * UnitPrice) 
 FROM customers c
@@ -66,7 +62,6 @@ ORDER BY totalorderamount DESC;
 
 
 Pull together two tables (suppliers and customers) based on country:
-
 SELECT country 
 FROM customers 
 UNION 
@@ -75,7 +70,6 @@ FROM suppliers
 ORDER BY country;
 
 Find the first order for each country:
-```
 with ordersbycountry as 
 (SELECT shipcountry ,customerID ,orderID ,orderdate = convert(date, orderdate) ,rownumberpercountry = row_number() 
 over (partition by shipcountry ORDER BY shipcountry, orderID) FROM orders) 
@@ -83,10 +77,9 @@ SELECT shipcountry ,customerID ,orderID ,orderDate
 FROM ordersbycountry 
 WHERE rownumberpercountry = 1 
 ORDER BY shipcountry;
-```
+
 
 Some customers are interested in combining smaller orders into a larger one. Show customers who have made more than one order in a 5 day period.
-```
 SELECT io.customerID, initialorderID = io.orderID ,initialorderdate = convert(date, io.orderdate),
 nextorderID = no.orderID ,nextorderdate = convert(date, no.orderdate) ,daysbetweenorders = datediff(dd, io.orderdate, 
 no.orderdate) 
