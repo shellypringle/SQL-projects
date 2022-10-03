@@ -16,6 +16,7 @@ to inform data-driven decisions related to "Amazingmart".
 Here, a large databse is queried to solve questions/issues related to the company "Northwind".
 
 [see my sql here](https://github.com/shellypringle/SQL-projects/blob/main/orders.sql),
+
 [see the data here](https://github.com/shellypringle/SQL-projects/blob/main/northwind.sql)
 
 
